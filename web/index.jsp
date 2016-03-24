@@ -11,6 +11,9 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+    <form action="helloworld/add" method="post">
+      Enter Name:<input type="text" name="name"/><br/>
+      <input type="submit" value="Send Name"/>
+    </form>
   </body>
 </html>
