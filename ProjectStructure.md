@@ -1,4 +1,4 @@
-- [ ] Replicate Rest service(copy pasta)
+- [x] Replicate Rest service(copy pasta)
 
 - [ ] Research how to send an email from java (both)
 
