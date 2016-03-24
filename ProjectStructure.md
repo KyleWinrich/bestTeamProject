@@ -1,18 +1,18 @@
-[] Replicate Rest service(copy pasta)
+-[] Replicate Rest service(copy pasta)
 
-[] Research how to send an email from java (both)
+-[] Research how to send an email from java (both)
 
-[] Write test project/ use project to send emails.
+-[] Write test project/ use project to send emails.
 
-[] Put send email into service!
+-[] Put send email into service!
 
-[] Firgure text, recipient, sender, subject...
+-[] Firgure text, recipient, sender, subject...
 
-[] and pass that into the service
+-[] and pass that into the service
 
-[] Write documentation 
+-[] Write documentation 
 
-[] host service - openshift?
+-[] host service - openshift?
 
-[] done?
+-[] done?
 
