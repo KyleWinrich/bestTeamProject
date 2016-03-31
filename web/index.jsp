@@ -11,6 +11,11 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <form action="helloworld/send" method="post">
+    Enter Id:<input type="text" name="id"/><br/><br/>
+    Enter Name:<input type="text" name="name"/><br/><br/>
+    Enter Email:<input type="text" name="email"/><br/><br/>
+    <input type="submit" value="Add Product"/>
+  </form>
   </body>
 </html>
