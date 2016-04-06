@@ -2,6 +2,7 @@
 
 *iml
 
+out/
 .idea/
 
 # Mobile Tools for Java (J2ME)
