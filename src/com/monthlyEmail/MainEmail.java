@@ -21,7 +21,8 @@ import java.util.Properties;
 public class MainEmail {
 
     private org.apache.log4j.Logger log = Logger.getLogger(this.getClass());
-
+    private final String username = "timothyjm70@gmail.com";//
+    private final String password = "98917tim";
 
     // The Java method will process HTTP GET requests
     @POST
@@ -34,7 +35,7 @@ public class MainEmail {
         // Get a Properties object
 
         Properties props = loadProperties();
-        
+
         /*Properties props = System.getProperties();
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
@@ -45,8 +46,7 @@ public class MainEmail {
         props.put("mail.debug", "true");
         props.put("mail.store.protocol", "pop3");
         props.put("mail.transport.protocol", "smtp");*/
-        final String username = "timothyjm70@gmail.com";//
-        final String password = "98917tim";
+
         try{
             Session session = Session.getDefaultInstance(props,
                     new Authenticator(){
