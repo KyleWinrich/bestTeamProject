@@ -14,6 +14,18 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
+/*
+    Crap we need:
+        -Message Box so user can enter their message
+        -Subject Box so user can enter the subject
+        -Clean up the code because Kyle left a bunch of commented crap in here.
+
+    Crap we might need:
+        -Fix fromEmailAddress so user can enter their own
+            -Maybe just tell user to Edit properties file?
+*/
+
+
 /**
  * Created by Student on 3/23/2016.
  */
@@ -23,6 +35,7 @@ public class MainEmail {
     private org.apache.log4j.Logger log = Logger.getLogger(this.getClass());
     private final String username = "timothyjm70@gmail.com";//
     private final String password = "98917tim";
+    private final String fromEmailAddress = "timothyjm70@gmail.com";
 
     // The Java method will process HTTP GET requests
     @POST
@@ -55,7 +68,8 @@ public class MainEmail {
                         }});
 
             // -- Create a new message --
-            Message msg = new MimeMessage(session);
+            Message msg = createMessage(session, id, name, email);
+            /*Message msg = new MimeMessage(session);
 
             // -- Set the FROM and TO fields --
             msg.setFrom(new InternetAddress("timothyjm70@gmail.com"));
@@ -63,10 +77,10 @@ public class MainEmail {
                     InternetAddress.parse(email,false));
             msg.setSubject("Hello");
             msg.setText("How are you " + name + " " + id);
-            msg.setSentDate(new Date());
+            msg.setSentDate(new Date());*/
             Transport.send(msg);
             log.info("Message sent.");
-        }catch (MessagingException e){
+        } catch (MessagingException e){
             log.error("error cause: " + e);
 
             return Response.status(500)
@@ -81,6 +95,22 @@ public class MainEmail {
 
     }
 
+
+
+    public Message createMessage(Session session, int id, String name, String email)
+                throws MessagingException {
+        Message msg = new MimeMessage(session);
+
+        // -- Set the FROM and TO fields --
+        msg.setFrom(new InternetAddress(fromEmailAddress));
+        msg.setRecipients(Message.RecipientType.TO,
+                InternetAddress.parse(email,false));
+        msg.setSubject("Hello");
+        msg.setText("How are you " + name + " " + id);
+        msg.setSentDate(new Date());
+
+        return msg;
+    }
 
 
     public Properties loadProperties() {

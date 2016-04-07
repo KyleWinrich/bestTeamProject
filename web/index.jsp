@@ -14,8 +14,10 @@
   <form action="helloworld/send" method="post">
     Enter Id:<input type="text" name="id"/><br/><br/>
     Enter Name:<input type="text" name="name"/><br/><br/>
-    Enter Email:<input type="text" name="email"/><br/><br/>
-    <input type="submit" value="Add Product"/>
+    Enter Recipient Email:<input type="text" name="email"/><br/><br/>
+    Enter Subject Line:<input type="text" name="subject"/><br/><br/>
+    Enter Message:<input type="text" name="userMessage"/><br/><br/>
+    <input type="submit" value="Send Email"/>
   </form>
   </body>
 </html>
