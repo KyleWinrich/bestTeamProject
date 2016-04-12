@@ -1,28 +1,25 @@
 package com.monthlyEmail;
 
 import org.apache.log4j.Logger;
-import org.junit.Test;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
 /*
-    Crap we need:
-        -Message Box so user can enter their message
-        -Subject Box so user can enter the subject
-        -Clean up the code because Kyle left a bunch of commented crap in here.
-
     Crap we might need:
-        -Fix fromEmailAddress so user can enter their own
+        -Fix fromEmailAddress so user can enter their own - still working on this
             -Maybe just tell user to Edit properties file?
+
+
+    added
+        -a method to accept variables via the url with only an email required
+
 */
 
 
@@ -33,32 +30,23 @@ import java.util.Properties;
 public class MainEmail {
 
     private org.apache.log4j.Logger log = Logger.getLogger(this.getClass());
-    private final String username = "timothyjm70@gmail.com";//
-    private final String password = "98917tim";
-    private final String fromEmailAddress = "timothyjm70@gmail.com";
+    private final String username = "madisonjavaee2016.noreply@gmail.com";//
+    private final String password = "student2016";
+    private final String fromEmailAddress = "madisonjavaee2016.noreply@gmail.com";
 
     // The Java method will process HTTP GET requests
     @POST
     @Path("/send")
     public Response addUser(
-            @FormParam("id") int id,
             @FormParam("name") String name,
-            @FormParam("email") String email) {
+            @FormParam("email") String email,
+            @FormParam("subject") String subjectText,
+            @FormParam("userMessage") String messageText) {
 
         // Get a Properties object
 
         Properties props = loadProperties();
 
-        /*Properties props = System.getProperties();
-        props.setProperty("mail.smtp.host", "smtp.gmail.com");
-        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
-        props.setProperty("mail.smtp.socketFactory.fallback", "false");
-        props.setProperty("mail.smtp.port", "465");
-        props.setProperty("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.debug", "true");
-        props.put("mail.store.protocol", "pop3");
-        props.put("mail.transport.protocol", "smtp");*/
 
         try{
             Session session = Session.getDefaultInstance(props,
@@ -68,16 +56,8 @@ public class MainEmail {
                         }});
 
             // -- Create a new message --
-            Message msg = createMessage(session, id, name, email);
-            /*Message msg = new MimeMessage(session);
+            Message msg = createMessage(session, name, email, messageText, subjectText);
 
-            // -- Set the FROM and TO fields --
-            msg.setFrom(new InternetAddress("timothyjm70@gmail.com"));
-            msg.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(email,false));
-            msg.setSubject("Hello");
-            msg.setText("How are you " + name + " " + id);
-            msg.setSentDate(new Date());*/
             Transport.send(msg);
             log.info("Message sent.");
         } catch (MessagingException e){
@@ -89,15 +69,49 @@ public class MainEmail {
         }
 
         return Response.status(200)
-                .entity("Email sent successfuly!<br> Id: "+id+"<br> Name: " + name + "<br>Email: " + email)
+                .entity("Email sent successfuly!<br> Name: " + name + "<br>Email: " + email)
                 .build();
+    }
 
+    @GET
+    @Path("/{email}")
+    public Response sendDefaultEmail(
+            @PathParam("email") String email,
+            @DefaultValue("No-Name")@QueryParam("name") String name,
+            @DefaultValue("Message")@QueryParam("message") String message,
+            @DefaultValue("subject")@QueryParam("subject") String subject) {
+        Properties props = loadProperties();
+        try{
+            Session session = Session.getDefaultInstance(props,
+                    new Authenticator(){
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }});
+            log.info(props.getProperty("default.message"));
+            log.info(props.getProperty("default.subject"));
+            // -- Create a new message --
+            Message msg = createMessage(session, name, email, message, subject);
 
+            Transport.send(msg);
+            log.info("Message sent.");
+        } catch (MessagingException e){
+            log.error("error cause: " + e);
+
+            return Response.status(500)
+                    .entity("Yeah... that didn't work. Something Broke. Have a nice day.")
+                    .build();
+        }
+
+        return Response.status(200)
+                .entity("Email sent successfuly!<br> Name: " + name + "<br>Email: " + email)
+                .build();
     }
 
 
 
-    public Message createMessage(Session session, int id, String name, String email)
+
+    public Message createMessage(Session session, String name, String email,
+                                 String messageText, String subjectText)
                 throws MessagingException {
         Message msg = new MimeMessage(session);
 
@@ -105,8 +119,8 @@ public class MainEmail {
         msg.setFrom(new InternetAddress(fromEmailAddress));
         msg.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(email,false));
-        msg.setSubject("Hello");
-        msg.setText("How are you " + name + " " + id);
+        msg.setSubject(subjectText);
+        msg.setText(messageText);
         msg.setSentDate(new Date());
 
         return msg;
@@ -125,10 +139,5 @@ public class MainEmail {
         }
 
         return properties;
-    }
-
-    @Test
-    public void testThat() {
-        Properties yup = loadProperties();
     }
 }

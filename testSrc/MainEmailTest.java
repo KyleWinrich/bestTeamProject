@@ -20,17 +20,11 @@ public class MainEmailTest {
 
     private org.apache.log4j.Logger log = Logger.getLogger(this.getClass());
     MainEmail me = new MainEmail();
-    private final String username = "timothyjm70@gmail.com";//
-    private final String password = "98917tim";
-    private final String fromEmailAddress = "timothyjm70@gmail.com";
+    private final String username = "madisonjavaee2016.noreply@gmail.com";//
+    private final String password = "student2016";
+    private final String fromEmailAddress = "madisonjavaee2016.noreply@gmail.com";
     Properties properties = new Properties();
 
-    @Test
-    public void testAddUser() throws Exception {
-
-
-
-    }
 
     @Test
     public void testCreateMessage() throws Exception {
@@ -55,7 +49,7 @@ public class MainEmailTest {
         msg.setText("How are you " + "testName" + " " + 1);
         msg.setSentDate(new Date());
 
-        assertEquals(msg.getLineCount(), me.createMessage(session, 1, "testName", "test@test.com").getLineCount());
+        assertEquals(msg.getLineCount(), me.createMessage(session, "testName", "test@test.com", "test", "tester").getLineCount());
     }
 
     @Test
@@ -71,6 +65,11 @@ public class MainEmailTest {
         }
 
         assertEquals(me.loadProperties(), properties);
+    }
+
+    @Test
+    public void testParamEmail() {
+
     }
 
 

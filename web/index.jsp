@@ -12,7 +12,6 @@
   </head>
   <body>
   <form action="helloworld/send" method="post">
-    Enter Id:<input type="text" name="id"/><br/><br/>
     Enter Name:<input type="text" name="name"/><br/><br/>
     Enter Recipient Email:<input type="text" name="email"/><br/><br/>
     Enter Subject Line:<input type="text" name="subject"/><br/><br/>
