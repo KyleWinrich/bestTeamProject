@@ -11,30 +11,27 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
-/*
-    Crap we might need:
-        -Fix fromEmailAddress so user can enter their own - still working on this
-            -Maybe just tell user to Edit properties file?
-
-
-    added
-        -a method to accept variables via the url with only an email required
-
-*/
-
 
 /**
  * Created by Student on 3/23/2016.
  */
-@Path("/helloworld")
+@Path("/emailService")
 public class MainEmail {
-
+    private Properties props = loadProperties();
     private org.apache.log4j.Logger log = Logger.getLogger(this.getClass());
-    private final String username = "madisonjavaee2016.noreply@gmail.com";//
-    private final String password = "student2016";
-    private final String fromEmailAddress = "madisonjavaee2016.noreply@gmail.com";
+    private final String username = props.getProperty("email.username");//
+    private final String password = props.getProperty("email.password");
+    private final String fromEmailAddress = props.getProperty("email.username");
 
-    // The Java method will process HTTP GET requests
+    /**
+     * used to send emails via a form.
+     *
+     * @param name
+     * @param email
+     * @param subjectText
+     * @param messageText
+     * @return
+     */
     @POST
     @Path("/send")
     public Response addUser(
@@ -42,12 +39,6 @@ public class MainEmail {
             @FormParam("email") String email,
             @FormParam("subject") String subjectText,
             @FormParam("userMessage") String messageText) {
-
-        // Get a Properties object
-
-        Properties props = loadProperties();
-
-
         try{
             Session session = Session.getDefaultInstance(props,
                     new Authenticator(){
@@ -69,10 +60,19 @@ public class MainEmail {
         }
 
         return Response.status(200)
-                .entity("Email sent successfuly!<br> Name: " + name + "<br>Email: " + email)
+                .entity("Email sent successfully!<br> Name: " + name + "<br>Email: " + email)
                 .build();
     }
 
+    /**
+     *  Used to send emails via the url instead of a form param.
+     *
+     * @param email
+     * @param name
+     * @param message
+     * @param subject
+     * @return
+     */
     @GET
     @Path("/{email}")
     public Response sendDefaultEmail(
@@ -80,15 +80,17 @@ public class MainEmail {
             @DefaultValue("No-Name")@QueryParam("name") String name,
             @DefaultValue("Message")@QueryParam("message") String message,
             @DefaultValue("subject")@QueryParam("subject") String subject) {
-        Properties props = loadProperties();
         try{
             Session session = Session.getDefaultInstance(props,
                     new Authenticator(){
                         protected PasswordAuthentication getPasswordAuthentication() {
                             return new PasswordAuthentication(username, password);
                         }});
-            log.info(props.getProperty("default.message"));
-            log.info(props.getProperty("default.subject"));
+
+            log.info("name:" + name);
+            //used to split the incoming query string to utilize the url
+            message.replace("+", " ");
+            subject.replace("+", " ");
             // -- Create a new message --
             Message msg = createMessage(session, name, email, message, subject);
 
@@ -103,7 +105,7 @@ public class MainEmail {
         }
 
         return Response.status(200)
-                .entity("Email sent successfuly!<br> Name: " + name + "<br>Email: " + email)
+                .entity("Email sent successfully!<br> Name: " + name + "<br>Email: " + email)
                 .build();
     }
 
