@@ -20,9 +20,9 @@ public class MainEmailTest {
 
     private org.apache.log4j.Logger log = Logger.getLogger(this.getClass());
     MainEmail me = new MainEmail();
-    private final String username = "madisonjavaee2016.noreply@gmail.com";//
-    private final String password = "student2016";
-    private final String fromEmailAddress = "madisonjavaee2016.noreply@gmail.com";
+    private final String username = "timothyjm70@gmail.com";//
+    private final String password = "98917tim";
+    private final String fromEmailAddress = "timothyjm70@gmail.com";
     Properties properties = new Properties();
 
 
