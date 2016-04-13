@@ -55,7 +55,7 @@ public class MainEmail {
             log.error("error cause: " + e);
 
             return Response.status(500)
-                    .entity("Yeah... that didn't work. Something Broke. Have a nice day.")
+                    .entity("Yeah... that didn't work. Something Broke. Have a nice day.<br>" + e.toString())
                     .build();
         }
 
@@ -100,7 +100,7 @@ public class MainEmail {
             log.error("error cause: " + e);
 
             return Response.status(500)
-                    .entity("Yeah... that didn't work. Something Broke. Have a nice day.")
+                    .entity("Yeah... that didn't work. Something Broke. Have a nice day.<br>" + e.toString())
                     .build();
         }
 
