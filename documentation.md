@@ -1,7 +1,7 @@
 This is a Rest service designed to send emails via form input and url parameters.
 
 
-Form inpu
+Form input
 
 1. its simple you input your Name, the recipients email, the subject of the email and the message body as text.
 
