@@ -1,5 +1,3 @@
-This is a Rest service designed to send emails via form input and url parameters.
-
 
 Form input
 
