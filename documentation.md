@@ -1,15 +1,5 @@
 This is a Rest service designed to send emails via form input and url parameters.
 
-to utilize either you first need to set up your email.properties file.
-1. You'll need to create a Gmail account to use this service.
-2. To use it you'll have to allow this service to have access to gmail you'll have to
-    a. go to your Gmail My Account page.
-    b. select sign in and security.
-    c. Allow less secure apps needs to be set to ON.
-3. Then in your email properties folder set the email.username and email.password to your emails user name and password.
-
-
-
 
 Form input
 1. its simple you input your Name, the recipients email, the subject of the email and the message body as text.
