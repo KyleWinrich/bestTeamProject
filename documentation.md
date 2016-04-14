@@ -22,7 +22,7 @@ Form input
 URL email input
 1. To use this method you'll need to use the URL formula below
 
-tomcat-kwinrich.rhcloud.com/emailService/{email-required}?name={name-not required}&
+tomcat-timothyjm.rhcloud.com/emailService/{email-required}?name={name-not required}&
 message={message-not required}&subject{subject-not required}
 
 2. The email is the recipients email and is obviously required to send it.
