@@ -1,13 +1,18 @@
 This is a Rest service designed to send emails via form input and url parameters.
 
 
-Form input
+Form inpu
+
 1. its simple you input your Name, the recipients email, the subject of the email and the message body as text.
+
 2. then you click send.
+
 3. you will be sent to a confirm page if successful. It'll look like.
+
 (Email sent successfully!
  Name: "name"
  Email: "email")
+ 
 4. if unsuccessful
 (Yeah... that didn't work. Something Broke. Have a nice day.)
 
